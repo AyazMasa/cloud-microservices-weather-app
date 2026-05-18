@@ -1,0 +1,21 @@
+services:
+  webapp:
+    build: ./webapp
+    ports:
+      - "8080:5000"
+    environment:
+      GEOCODING_SERVICE_URL: "http://geocoding-service:5001"
+      WEATHER_SERVICE_URL: "http://weather-service:5002"
+    depends_on:
+      - geocoding-service
+      - weather-service
+
+  geocoding-service:
+    build: ./geocoding-service
+    ports:
+      - "5001:5001"
+
+  weather-service:
+    build: ./weather-service
+    ports:
+      - "5002:5002"

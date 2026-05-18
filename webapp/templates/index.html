@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Lookup</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f5f5;
+        color: #222;
+      }
+
+      main {
+        max-width: 640px;
+        margin: 48px auto;
+        padding: 24px;
+        background: #fff;
+        border: 1px solid #ddd;
+      }
+
+      label,
+      input,
+      button {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      input,
+      button {
+        margin-top: 8px;
+        padding: 10px;
+        font-size: 16px;
+      }
+
+      button {
+        margin-top: 12px;
+        cursor: pointer;
+      }
+
+      .message,
+      .result {
+        margin-top: 20px;
+        padding: 12px;
+        border: 1px solid #ddd;
+      }
+
+      .error {
+        background: #fff0f0;
+        border-color: #e0b4b4;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Weather Lookup</h1>
+      <form method="post" action="/search">
+        <label for="city">City name</label>
+        <input id="city" name="city" type="text" placeholder="Kyiv" value="{{ city }}" required>
+        <button type="submit">Check Weather</button>
+      </form>
+
+      {% if error %}
+        <div class="message error">
+          {{ error }}
+        </div>
+      {% endif %}
+
+      {% if location and weather %}
+        <div class="result">
+          <h2>{{ location.display_name }}</h2>
+          <p>Current temperature: {{ weather.current.temperature }} deg C</p>
+          <p>Current wind speed: {{ weather.current.wind_speed }} km/h</p>
+
+          <h3>3-day forecast</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Max temp</th>
+                <th>Min temp</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for day in weather.forecast %}
+                <tr>
+                  <td>{{ day.date }}</td>
+                  <td>{{ day.temp_max }} deg C</td>
+                  <td>{{ day.temp_min }} deg C</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </main>
+  </body>
+</html>
