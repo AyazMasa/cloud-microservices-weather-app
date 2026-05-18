@@ -25,14 +25,14 @@ webapp
 
 The webapp is the only service the user interacts with directly. It calls the geocoding service first, then calls the weather service only when the city is found.
 
-## Tech Stack
+## Technologies Used
 
 - Python 3.12
 - Flask
 - Requests
 - Docker
 - Docker Compose
-- Nominatim API for geocoding
+- Nominatim API for city geocoding
 - Open-Meteo API for weather data
 
 ## Implemented Features
@@ -45,7 +45,7 @@ The webapp is the only service the user interacts with directly. It calls the ge
 - Error handling for unavailable upstream services
 - External API integration without API keys
 
-## Run Locally
+## How To Run
 
 Requirements:
 
@@ -108,6 +108,9 @@ See `.env.example` for non-secret example values.
 
 ```text
 docker-compose.yml
+.env.example
+.gitignore
+README.md
 webapp/
   app.py
   Dockerfile
@@ -121,9 +124,27 @@ weather-service/
   app.py
   Dockerfile
   requirements.txt
+docs/
+  screenshots/
 report/
   notes.md
 ```
+
+## What I Learned
+
+- How to split one application flow into small services with clear responsibilities.
+- How Docker Compose can connect services through internal service names.
+- How a web-facing service can orchestrate calls to backend services.
+- How to add basic health endpoints for manual service checks.
+- How to handle external API failures without exposing raw errors to users.
+
+## Future Improvements
+
+- Add automated tests for service endpoints and failure cases.
+- Add request logging and more structured error messages.
+- Add frontend screenshots to `docs/screenshots/` after reviewing them for personal data.
+- Add deployment notes for a cloud platform that supports Docker Compose or separate containers.
+- Add caching or rate-limit handling for repeated city lookups.
 
 ## Notes
 
